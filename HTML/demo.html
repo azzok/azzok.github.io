@@ -61,6 +61,8 @@
                   </div>
                   <!-- swup container end -->
                </div>
+
+               
                <!-- content end -->
                <!-- menu bar -->
                <div class="art-menu-bar">
@@ -92,6 +94,7 @@
             </div>
             <!-- app container end -->
          </div>
+         
          <!-- app wrapper end -->
          <!-- preloader -->
          <div class="art-preloader">
@@ -117,10 +120,14 @@
                .then(response => response.text())
                .then(data => document.getElementById('info_page').innerHTML = data);
 
-
+    
          fetch('sections/demo.html')
                .then(response => response.text())
                .then(data => document.getElementById('demo_page').innerHTML = data);
+               
+        fetch('include/copyright.html')
+               .then(response => response.text())
+               .then(data => document.getElementById('copyright_page').innerHTML = data);
 
       </script>
 

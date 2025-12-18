@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+   <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+   <head>
+   <!-- Required meta tags -->
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <!-- color of address bar in mobile browser -->
+   <meta name="theme-color" content="#2B2B35">
+   <!-- favicon  -->
+   <link rel="shortcut icon" href="img/thumbnail.ico" type="image/x-icon">
+   <!-- bootstrap css -->
+   <link rel="stylesheet" href="css/plugins/bootstrap.min.css">
+   <!-- font awesome css -->
+   <link rel="stylesheet" href="css/plugins/font-awesome.min.css">
+   <!-- swiper css -->
+   <link rel="stylesheet" href="css/plugins/swiper.min.css">
+   <!-- fancybox css -->
+   <link rel="stylesheet" href="css/plugins/fancybox.min.css">
+   <!-- main css -->
+   <link rel="stylesheet" href="css/style.css">
+    <style>
+        div#info_page {
+            display: none;
+        }
+    </style>
+   <title>ASHOKKUMAR P - Web developer</title>
+   </head>
+
+   <body>
+      <!-- app -->
+      <div class="art-app">
+         <!-- mobile top bar -->
+         <div class="art-mobile-top-bar"></div>
+         <!-- app wrapper -->
+         <div class="art-app-wrapper">
+            <!-- app container end -->
+            <div class="art-app-container">
+               <div id="info_page"></div>
+               <!-- content -->
+               <div class="art-content">
+                  <!-- curtain -->
+                  <div class="art-curtain"></div>
+                  <!-- top background -->
+                  <div class="art-top-bg" style="background-image: url(img/bg.jpg)">
+                     <!-- overlay -->
+                     <div class="art-top-bg-overlay"></div>
+                     <!-- overlay end -->
+                  </div>
+                  <!-- top background end -->
+                  <!-- swup container -->
+                  <div class="transition-fade" id="swup">
+                     <!-- scroll frame -->
+                     <div id="scrollbar" class="art-scroll-frame">
+               
+             
+                        <div id="project_page"></div>
+                 
+                     </div>
+                     <!-- scroll frame end -->
+                  </div>
+                  <!-- swup container end -->
+               </div>
+               <!-- content end -->
+               <!-- menu bar -->
+               <div class="art-menu-bar">
+                  <!-- menu bar frame -->
+                  <div class="art-menu-bar-frame">
+                     <!-- menu bar header -->
+                     <div class="art-menu-bar-header">
+                        <!-- menu bar button -->
+                        <a class="art-menu-bar-btn" href="#.">
+                           <!-- icon -->
+                           <span></span>
+                        </a>
+                        <!-- menu bar button end -->
+                     </div>
+                     <!-- menu bar header end -->
+                     <!-- current page title -->
+                     <div class="art-current-page"></div>
+                     <!-- current page title end -->
+                     <!-- scroll frame -->
+                     <div class="art-scroll-frame">
+                        <div id="nav_page"></div>
+                        <div id="language_page"></div>
+                     </div>
+                     <!-- scroll frame end -->
+                  </div>
+                  <!-- menu bar frame -->
+               </div>
+               <!-- menu bar end -->
+            </div>
+            <!-- app container end -->
+         </div>
+         <!-- app wrapper end -->
+         <!-- preloader -->
+         <div class="art-preloader">
+            <div class="art-preloader-content">
+               <h4>Loading...</h4>
+               <div id="preloader" class="art-preloader-load"></div>
+            </div>
+         </div>
+         <!-- preloader end -->
+      </div>
+      <!-- app end -->
+
+      <script>
+         fetch('include/nav.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('nav_page').innerHTML = data);
+
+         fetch('include/language.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('language_page').innerHTML = data);
+
+         fetch('include/info.html')
+               .then(response => response.text())
+               .then(data => document.getElementById('info_page').innerHTML = data);
+
+
+         fetch('sections/projects.html')
+               .then(response => response.text())
+               .then(data => document.getElementById('project_page').innerHTML = data);
+
+        fetch('include/copyright.html')
+               .then(response => response.text())
+               .then(data => document.getElementById('copyright_page').innerHTML = data);
+      </script>
+        <script src="data/projectsData.js"></script>
+        <script>
+            setTimeout(function() {
+                console.log("projects");
+
+                // Now you can use the `projectsData` directly since it's loaded from the JS file
+                const artGridContainer = document.getElementById('artGridContainer');
+
+                for (let i = 0; i < projectsData.length; i++) {
+                    const artGridItem = document.createElement('div');
+                    artGridItem.className = `art-grid-item ${projectsData[i].categoryName}`;
+                    artGridItem.innerHTML = `
+                        <a data-fancybox="gallery" href="${projectsData[i].imageUrl}" class="art-a art-portfolio-item-frame art-square">
+                            <img src="${projectsData[i].thumbnailUrl}" alt="item">
+                            <span class="art-item-hover"><i class="fas fa-expand"></i></span>
+                        </a>
+                        <div class="art-item-description">
+                            <h5 class="mb-15">${projectsData[i].title}</h5>
+                            <div class="mb-15">${projectsData[i].framework}</div>
+                            <a target="_blank" href="${projectsData[i].link}" class="art-link art-color-link art-w-chevron">Read more</a>
+                        </div>
+                    `;
+                    artGridContainer.appendChild(artGridItem);
+                }
+
+            }, 2000);
+        </script>
+
+      
+
+      <!-- jquery js -->
+      <script src="js/plugins/jquery.min.js"></script>
+      <!-- anime js -->
+      <script src="js/plugins/anime.min.js"></script>
+      <!-- swiper js -->
+      <script src="js/plugins/swiper.min.js"></script>
+      <!-- progressbar js -->
+      <script src="js/plugins/progressbar.min.js"></script>
+      <!-- smooth scrollbar js -->
+      <script src="js/plugins/smooth-scrollbar.min.js"></script>
+      <!-- overscroll js -->
+      <script src="js/plugins/overscroll.min.js"></script>
+      <!-- typing js -->
+      <script src="js/plugins/typing.min.js"></script>
+      <!-- isotope js -->
+      <script src="js/plugins/isotope.min.js"></script>
+      <!-- fancybox js -->
+      <script src="js/plugins/fancybox.min.js"></script>
+      <!-- swup js -->
+      <script src="js/plugins/swup.min.js"></script>
+
+      <!-- main js -->
+      <script src="js/main.js"></script>
+
+
+
+
+
+   </body>
+</html>
