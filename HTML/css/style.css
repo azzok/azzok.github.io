@@ -2820,3 +2820,8 @@ html.is-animating .fade-left {
 }
 
 /*# sourceMappingURL=style.css.map */
+.art-links-wrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}

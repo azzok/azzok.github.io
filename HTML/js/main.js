@@ -780,31 +780,38 @@ $(function() {
 
 
   function calculateAge(birthDate) {
-    // Parse the birth date string to a Date object
-    const birthDateObj = new Date(birthDate);
+      // Parse the birth date string to a Date object
+      const birthDateObj = new Date(birthDate);
 
-    // Get the current date
-    const currentDate = new Date();
+      // Get the current date
+      const currentDate = new Date();
 
-    // Calculate the difference in years
-    let age = currentDate.getFullYear() - birthDateObj.getFullYear();
+      // Calculate the difference in years
+      let age = currentDate.getFullYear() - birthDateObj.getFullYear();
 
-    // Adjust the age if the birthday hasn't occurred yet this year
-    if (currentDate.getMonth() < birthDateObj.getMonth() || 
-        (currentDate.getMonth() === birthDateObj.getMonth() && currentDate.getDate() < birthDateObj.getDate())) {
-        age--;
-    }
+      // Adjust the age if the birthday hasn't occurred yet this year
+      if (currentDate.getMonth() < birthDateObj.getMonth() || 
+          (currentDate.getMonth() === birthDateObj.getMonth() && currentDate.getDate() < birthDateObj.getDate())) {
+          age--;
+      }
 
-    $("#my_age").html(age);
-    return age;
-}
+      $("#my_age").html(age);
+      return age;
+  }
 
-// Example usage
-const birthDate = "1994-05-16"; 
-const age = calculateAge(birthDate);
+  // Custom script
+  const birthDate = "1994-05-16"; 
+  const age = calculateAge(birthDate);
 
-console.log("Age:", age);
+  console.log("My Age: ", age);
 
+  setTimeout(() => {
+    console.log("Adding copyright year")
+      const yearEl = document.getElementById("currentYear");
+      if (yearEl) {
+          yearEl.textContent = new Date().getFullYear();
+      } 
+  }, 300);
 
   /* -------------------------------------------
 

@@ -165,7 +165,55 @@
 
 
 
+
+
       </script>
+      <script src="data/projectsData.js"></script>
+      <script>
+   (function renderProjects(retries = 10) {
+            setTimeout(() => {
+                const grid = document.getElementById('projectsGrid');
+                if (!grid) {
+                    if (retries > 0) renderProjects(retries - 1);
+                    return;
+                }
+
+                grid.innerHTML = projectsData.map(project => `
+                    <div class="art-grid-item ${project.categoryName}">
+                        <a data-fancybox="gallery"
+                           href="${project.imageUrl}"
+                           class="art-a art-portfolio-item-frame art-square">
+                            <img src="${project.thumbnailUrl}" alt="${project.title}">
+                            <span class="art-item-hover">
+                                <i class="fas fa-expand"></i>
+                            </span>
+                        </a>
+
+                        <div class="art-item-description">
+                            <h5 class="mb-15">${project.title}</h5>
+                            <div class="mb-15">${project.framework}</div>
+
+                            <div class="art-links-wrapper">
+                                <a href="${project.link}"
+                                   class="art-link art-color-link art-w-chevron">
+                                    Read more
+                                </a>
+
+                                ${project.siteLink ? `
+                                    <a href="${project.siteLink}"
+                                       target="_blank"
+                                       class="art-link art-color-link">
+                                        Visit Site
+                                    </a>` : '<span></span>'}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+            }, 200);
+        })();
+    </script>
+
       
 
       <!-- jquery js -->

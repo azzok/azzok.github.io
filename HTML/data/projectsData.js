@@ -20,6 +20,34 @@ const projectsData = [
         `,
         link: 'project_details.html?id=1',
         siteLink: 'https://silvercollections.in/',
-        categoryName: 'projects'
+        categoryName: 'wordpress'
+    },
+    {   id: 1,
+        imageUrl: 'img/project/2.png',
+        thumbnailUrl: 'img/project/2.png',
+        title: 'Alagammai Traders',
+        framework: 'Laravel',
+        description: `Welcome to Alagammai Traders, your premier destination for high-quality seating solutions! With years of experience in the industry, we specialize in providing a diverse range of chairs to meet every need, from basic chairs to luxurious boss and executive models.
+
+ 
+
+            At Alagammai Traders, we understand that comfort and style are essential in any setting—be it an office, home, or commercial space. Our curated selection features chairs crafted with precision and attention to detail, ensuring durability and aesthetics that stand the test of time.
+
+            
+
+            Our mission is to deliver exceptional products that enhance your workspace and living areas. We take pride in sourcing only the best materials and employing skilled artisans to create chairs that offer both functionality and elegance.
+
+            
+
+            Whether you’re looking for an ergonomic solution to boost productivity or a statement piece to elevate your décor, Alagammai Traders has something for everyone. Our commitment to customer satisfaction means we’re here to guide you through every step of your purchasing journey.
+
+            
+
+            Join us in transforming your seating experience—where quality meets comfort!
+
+        `,
+        link: 'project_details.html?id=2',
+        siteLink: 'https://alagammaitraders.in/',
+        categoryName: 'laravel'
     }
 ];
