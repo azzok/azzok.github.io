@@ -306,31 +306,162 @@ $(function() {
     }
   });
 
-  $("#form").submit(function() {
-    $.ajax({
-      type: "POST",
-      url: "mail.php",
-      data: $(this).serialize()
-    }).done(function() {
+  // $("#form").submit(function() {
+  //   $.ajax({
+  //     type: "POST",
+  //     url: "mail.php",
+  //     data: $(this).serialize()
+  //   }).done(function() {
 
-      var tl = anime.timeline({
-        easing: 'easeOutExpo',
-      });
+  //     var tl = anime.timeline({
+  //       easing: 'easeOutExpo',
+  //     });
 
-      tl
-        .add({
-          targets: '.art-submit',
-          opacity: 0,
-          scale: .5,
-        })
-        .add({
-          targets: '.art-success',
-          scale: 1,
-          height: '45px',
-        })
-    });
-    return false;
+  //     tl
+  //       .add({
+  //         targets: '.art-submit',
+  //         opacity: 0,
+  //         scale: .5,
+  //       })
+  //       .add({
+  //         targets: '.art-success',
+  //         scale: 1,
+  //         height: '45px',
+  //       })
+  //   });
+  //   return false;
+  // });
+
+
+
+
+  const form = $("#form");
+  const sendBtn = $("#sendMessage");
+
+  const nameInput = $("#name");
+  const emailInput = $("#email");
+  const messageInput = $("#message");
+
+  /* ================== USER META ================== */
+  async function getUserMeta() {
+    let country = "Unknown";
+    try {
+      const res = await fetch("https://ipapi.co/json/");
+      const data = await res.json();
+      country = data.country_name;
+    } catch (e) {}
+
+    return {
+      country,
+      system: navigator.platform,
+      browser: navigator.userAgent,
+      source: "azzok.github.io"
+    };
+  }
+
+  /* ================== ERROR HANDLING ================== */
+  function showError(input, msg) {
+    // input.addClass("input-error");
+    $("#" + input.attr("id") + "Error").text(msg);
+  }
+
+  function clearError(input) {
+    input.removeClass("input-error");
+    $("#" + input.attr("id") + "Error").text("");
+  }
+
+  nameInput.on("input", () => clearError(nameInput));
+  emailInput.on("input", () => clearError(emailInput));
+  messageInput.on("input", () => clearError(messageInput));
+
+  /* ================== BUTTON STATES ================== */
+  function setButton(state) {
+    sendBtn.prop("disabled", state === "loading");
+    sendBtn.removeClass("btn-success btn-error");
+
+    if (state === "loading") {
+      sendBtn.html(`<span class="loader"></span> <span>Sending...</span>`);
+    }
+
+    if (state === "success") {
+      sendBtn.html(`<span class="p-md-2">✓</span> <span>Sent</span>`);
+      sendBtn.addClass("btn-success");
+      sendBtn.addClass("text-white");
+
+    }
+
+    if (state === "error") {
+      sendBtn.html(`✕ Failed`);
+      sendBtn.addClass("btn-error");
+    }
+
+    if (state === "default") {
+      sendBtn.html(`<span>Send message</span>`);
+      sendBtn.prop("disabled", false);
+    }
+  }
+
+  /* ================== SUBMIT ================== */
+  sendBtn.on("click", async function (e) {
+    e.preventDefault();
+
+    let valid = true;
+
+    if (!nameInput.val().trim()) {
+      showError(nameInput, "Name is required");
+      valid = false;
+    }
+
+    if (!emailInput.val().trim()) {
+      showError(emailInput, "Email is required");
+      valid = false;
+    } else if (!/^\S+@\S+\.\S+$/.test(emailInput.val())) {
+      showError(emailInput, "Enter a valid email address");
+      valid = false;
+    }
+
+    if (!messageInput.val().trim()) {
+      showError(messageInput, "Message cannot be empty");
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    setButton("loading");
+    // return ; 
+    try {
+      const meta = await getUserMeta();
+
+      const requestData = {
+        name: nameInput.val().trim(),
+        email: emailInput.val().trim(),
+        message: messageInput.val().trim(),
+        country: meta.country,
+        system: meta.system,
+        browser: meta.browser,
+        source: meta.source
+      };
+
+      await emailjs.send(
+        "service_7jvuk4b",
+        "template_nh3bsc6",
+        requestData
+      );
+
+      $(".art-success").fadeIn();
+      form[0].reset();
+      setButton("success");
+
+      setTimeout(() => setButton("default"), 3000);
+
+    } catch (err) {
+      console.error(err);
+      setButton("error");
+      setTimeout(() => setButton("default"), 3000);
+    }
   });
+
+
 
   // portfolio filter
   $('.art-filter a').on('click', function() {

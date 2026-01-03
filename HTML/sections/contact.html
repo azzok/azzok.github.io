@@ -43,33 +43,27 @@
 
           <!-- contact form -->
           <form id="form" class="art-contact-form">
-            <!-- form field -->
             <div class="art-form-field">
-              <!-- name input -->
-              <input id="name" name="name" class="art-input" type="text" placeholder="Name" required>
-              <!-- label -->
+              <input id="name" class="art-input" type="text" placeholder="Name">
               <label for="name"><i class="fas fa-user"></i></label>
+              <small class="error-text" id="nameError"></small>
             </div>
-            <!-- form field end -->
-            <!-- form field -->
+
             <div class="art-form-field">
-              <!-- email input -->
-              <input id="email" name="email" class="art-input" type="email" placeholder="Email" required>
-              <!-- label -->
+              <input id="email" class="art-input" type="email" placeholder="Email">
               <label for="email"><i class="fas fa-at"></i></label>
+              <small class="error-text" id="emailError"></small>
             </div>
-            <!-- form field end -->
-            <!-- form field -->
+
             <div class="art-form-field">
-              <!-- message textarea -->
-              <textarea id="message" name="text" class="art-input" placeholder="Message" required></textarea>
-              <!-- label -->
+              <textarea id="message" class="art-input" placeholder="Message"></textarea>
               <label for="message"><i class="far fa-envelope"></i></label>
+              <small class="error-text" id="messageError"></small>
             </div>
-            <!-- form field end -->
+
             <!-- button -->
             <div class="art-submit-frame">
-              <button class="art-btn art-btn-md art-submit" type="submit"><span>Send message</span></button>
+              <button class="art-btn art-btn-md art-submit" id="sendMessage" type="button"><span>Send message</span></button>
               <!-- success -->
               <div class="art-success">Success <i class="fas fa-check"></i></div>
             </div>
