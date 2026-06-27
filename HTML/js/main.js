@@ -401,6 +401,22 @@ $(function() {
     }
   }
 
+  /* ================== SENDERS ================== */
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxfneZLe1YO-lC_w-TTK1rsTttmaYs08RZy-QfMvP-09o5cURLClEPbQ0NerUeytulnyQ/exec';
+
+  async function sendViaGoogleScript(data) {
+    const res = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: new URLSearchParams(data)
+    });
+    const json = await res.json();
+    if (json.result !== 'success') throw new Error(json.error || 'Google Script error');
+  }
+
+  async function sendViaEmailJS(data) {
+    await emailjs.send("service_7jvuk4b", "template_nh3bsc6", data);
+  }
+
   /* ================== SUBMIT ================== */
   sendBtn.on("click", async function (e) {
     e.preventDefault();
@@ -428,7 +444,7 @@ $(function() {
     if (!valid) return;
 
     setButton("loading");
-    // return ; 
+
     try {
       const meta = await getUserMeta();
 
@@ -442,17 +458,25 @@ $(function() {
         source: meta.source
       };
 
-      await emailjs.send(
-        "service_7jvuk4b",
-        "template_nh3bsc6",
-        requestData
-      );
+      const [gsResult, ejResult] = await Promise.allSettled([
+        sendViaGoogleScript(requestData),
+        sendViaEmailJS(requestData)
+      ]);
 
-      $(".art-success").fadeIn();
-      form[0].reset();
-      setButton("success");
+      if (gsResult.status === 'rejected') console.error('Google Script:', gsResult.reason);
+      if (ejResult.status === 'rejected') console.error('EmailJS:', ejResult.reason);
 
-      setTimeout(() => setButton("default"), 3000);
+      const anySuccess = gsResult.status === 'fulfilled' || ejResult.status === 'fulfilled';
+
+      if (anySuccess) {
+        $(".art-success").fadeIn();
+        form[0].reset();
+        setButton("success");
+        setTimeout(() => setButton("default"), 3000);
+      } else {
+        setButton("error");
+        setTimeout(() => setButton("default"), 3000);
+      }
 
     } catch (err) {
       console.error(err);
